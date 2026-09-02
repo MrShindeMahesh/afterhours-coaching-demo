@@ -11,6 +11,17 @@ const COURSES = [
     { name: 'Spoken English', icon: I.Languages, color: '#db2777', tag: 'Confidence & Careers', dur: '3-Month Batches', seats: 'Seats left: 25', intro: 'Fluency + personality', pts: ['Daily speaking practice', 'Group discussions & GD', 'Interview readiness'] },
 ];
 
+const WHY_US = [
+    { icon: I.Award, title: 'Elite Faculty', desc: 'IIT / NIT alumni and 18+ year veterans who teach concepts, not shortcuts.' },
+    { icon: I.Users, title: 'Small Batches (Max 25)', desc: 'Every batch capped at 25 so no doubt is ever left unanswered.' },
+    { icon: I.ClipboardCheck, title: 'Daily Practice Tests', desc: 'Topic-wise DPPs every day, full mocks every week with instant analytics.' },
+    { icon: I.TrendingUp, title: 'Parent Performance Portal', desc: 'Attendance, scores and rank shared with parents every month — no surprises.' },
+    { icon: I.HeartHandshake, title: '1:1 Mentorship', desc: 'A dedicated mentor tracks focus, attendance and progress of each student.' },
+    { icon: I.Trophy, title: 'Scholarship Up to 100%', desc: 'Merit-cum-means scholarships through our entrance scholarship test.' },
+    { icon: I.MessageCircle, title: 'Doubt WhatsApp Groups', desc: 'Weekday doubt solving on WhatsApp — no question waits till next class.' },
+    { icon: I.Building2, title: 'Modern Campus', desc: 'Smart classrooms, AC study halls, labs and a distraction-free library.' },
+];
+
 const JOURNEY = [
     { icon: I.CalendarDays, title: 'Book a Free Demo', desc: 'Try a real class with our faculty — online or at the centre, at no cost.' },
     { icon: I.UserCheck, title: 'Scholarship Test', desc: 'Appear for a short assessment and get merit-cum-means scholarships.' },
