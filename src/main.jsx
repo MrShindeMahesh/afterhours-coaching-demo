@@ -2,7 +2,9 @@ import React, { useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from 'recharts';
 import * as I from 'lucide-react';
+import Landing from './Landing.jsx';
 import './styles.css';
+import './landing.css';
 
 const courses = ['JEE 2027', 'NEET 2027', 'MHT-CET', 'Foundation', 'Mathematics', 'Spoken English'];
 const nav = [['Dashboard', I.LayoutDashboard], ['Leads', I.UsersRound], ['Students', I.GraduationCap], ['Admissions', I.BadgeCheck], ['Demo Classes', I.CalendarDays], ['Batches', I.Layers], ['Attendance', I.ClipboardCheck], ['Fees', I.CreditCard], ['Tests & Results', I.NotebookTabs], ['Teachers', I.UserRound], ['Parents', I.HeartHandshake], ['WhatsApp', I.MessageCircle], ['Campaigns', I.Send], ['Reviews', I.Star], ['Analytics', I.ChartNoAxesCombined], ['Settings', I.Settings]];
@@ -14,15 +16,16 @@ const leadTrend = [{ m: 'Apr', v: 42 }, { m: 'May', v: 58 }, { m: 'Jun', v: 66 }
 const sourceData = [{ name: 'Google', value: 30 }, { name: 'Instagram', value: 24 }, { name: 'Website', value: 18 }, { name: 'WhatsApp', value: 15 }, { name: 'Referral', value: 13 }];
 const revenue = [{ m: 'Apr', v: 320000 }, { m: 'May', v: 410000 }, { m: 'Jun', v: 455000 }, { m: 'Jul', v: 510000 }, { m: 'Aug', v: 590000 }, { m: 'Sep', v: 640000 }];
 function App() {
-    const [page, setPage] = useState('Dashboard'), [sales, setSales] = useState(false), [leads, setLeads] = useState(seedLeads()), [modal, setModal] = useState(null), [toast, setToast] = useState('');
+    const [view, setView] = useState('landing'), [page, setPage] = useState('Dashboard'), [sales, setSales] = useState(false), [leads, setLeads] = useState(seedLeads()), [modal, setModal] = useState(null), [toast, setToast] = useState('');
     const [search, setSearch] = useState(''); const [status, setStatus] = useState('All');
     const [attendance, setAttendance] = useState({ Present: 26, Absent: 4, Late: 2 }); const [paid, setPaid] = useState(318000);
     const notify = (x) => { setToast(x); setTimeout(() => setToast(''), 2200) };
     const filtered = useMemo(() => leads.filter(l => (l.name + l.course + l.phone + l.source).toLowerCase().includes(search.toLowerCase()) && (status === 'All' || l.status === status)), [leads, search, status]);
     const addLead = (e) => { e.preventDefault(); const f = new FormData(e.currentTarget); setLeads([{ id: `LD-${1001 + leads.length}`, name: f.get('name'), parent: f.get('parent'), phone: f.get('phone'), course: f.get('course'), source: 'Website', status: 'New', counsellor: 'Priya', follow: 'Tomorrow' }, ...leads]); setModal(null); notify('Lead created successfully'); };
     const navClick = (p) => { setPage(p); setSales(false) };
+    if (view === 'landing') return <Landing onLaunch={() => setView('app')} />;
     return <div className="app">
-        <aside className="sidebar"><div className="brand"><div className="mark">A</div><div><b>AFTERHOURS</b><small>Complete Business Solutions</small></div></div><div className="demo-pill">● DEMO DATA</div><nav>{nav.map(([n, Icon]) => <button className={page === n && !sales ? 'active' : ''} onClick={() => navClick(n)} key={n}><Icon size={18} /><span>{n}</span></button>)}</nav><button className="sales" onClick={() => { setSales(true); setPage('Dashboard') }}><I.PlayCircle size={18} /> Sales Demo</button><div className="user"><div className="avatar">MD</div><div><b>Mahesh Demo</b><small>Admin</small></div><I.MoreHorizontal size={18} /></div></aside>
+        <aside className="sidebar"><div className="brand"><div className="mark">A</div><div><b>AFTERHOURS</b><small>Complete Business Solutions</small></div></div><div className="demo-pill">● DEMO DATA</div><nav>{nav.map(([n, Icon]) => <button className={page === n && !sales ? 'active' : ''} onClick={() => navClick(n)} key={n}><Icon size={18} /><span>{n}</span></button>)}</nav><button className="sales" onClick={() => { setSales(true); setPage('Dashboard') }}><I.PlayCircle size={18} /> Sales Demo</button><button className="sales" onClick={() => setView('landing')}><I.Globe size={18} /> Visit Website</button><div className="user"><div className="avatar">MD</div><div><b>Mahesh Demo</b><small>Admin</small></div><I.MoreHorizontal size={18} /></div></aside>
         <main className="main"><header><div><div className="eyebrow">BRIGHTPATH ACADEMY · DEMO</div><h1>{sales ? 'Sales Demo' : page}</h1></div><div className="header-actions"><button className="icon-btn" onClick={() => notify('3 new notifications')}><I.Bell size={19} /><i>3</i></button><button className="outline" onClick={() => setModal('lead')}><I.Plus size={17} /> Add Lead</button><div className="profile">MD</div></div></header>
             {sales ? <SalesDemo notify={notify} /> : <Page page={page} leads={filtered} search={search} setSearch={setSearch} status={status} setStatus={setStatus} setModal={setModal} setLeads={setLeads} notify={notify} attendance={attendance} setAttendance={setAttendance} paid={paid} setPaid={setPaid} />}
         </main>{toast && <div className="toast"><I.CheckCircle2 size={18} />{toast}</div>}
